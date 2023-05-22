@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MovieCredits } from 'servise/Servise';
 
-export const Cast = () => {
+const Cast = () => {
   const [casts, setCasts] = useState([]);
   const { id } = useParams();
 
@@ -23,7 +23,6 @@ export const Cast = () => {
               src={`https://image.tmdb.org/t/p/w200${profile_path}`}
               alt={name}
             />
-
             <p>{name}</p>
             <p>Character: {character}</p>
           </li>
@@ -32,3 +31,5 @@ export const Cast = () => {
     </ul>
   );
 };
+
+export default Cast;

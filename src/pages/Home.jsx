@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Trending } from 'servise/Servise';
 import { MoviesList } from 'components/MoviesList';
 import { Outlet } from 'react-router-dom';
 
-export const Home = () => {
+const Home = () => {
   const [topMovies, setTopMovies] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,11 @@ export const Home = () => {
     <>
       <h1>Trending today</h1>
       <MoviesList moviesList={topMovies} />
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default Home;

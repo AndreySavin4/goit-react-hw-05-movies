@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const Movies = () => {
+const Movies = () => {
   const [value, setValue] = useState('');
 
   const onChange = event => {
@@ -16,3 +16,5 @@ export const Movies = () => {
     </form>
   );
 };
+
+export default Movies;

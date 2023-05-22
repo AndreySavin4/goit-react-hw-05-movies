@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { MovieDetail } from '../servise/Servise';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movieId, setMovieId] = useState([]);
   const [status, setStatus] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
-    // setStatus(false);
     MovieDetail(id)
       .then(res => {
         setStatus(true);
@@ -64,7 +63,11 @@ export const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default MovieDetails;

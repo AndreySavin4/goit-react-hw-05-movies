@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { MovieCredits } from 'servise/Servise';
 
 const Cast = () => {
-  const [casts, setCasts] = useState([]);
+  const [casts, setCasts] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -14,6 +14,10 @@ const Cast = () => {
       .catch(error => new Error(error));
   }, [id]);
 
+  if (!casts) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <ul>
       {casts.map(({ profile_path, name, character, id }) => {
@@ -21,7 +25,7 @@ const Cast = () => {
           <li key={id}>
             <img
               src={`https://image.tmdb.org/t/p/w200${profile_path}`}
-              alt={name}
+              alt=""
             />
             <p>{name}</p>
             <p>Character: {character}</p>

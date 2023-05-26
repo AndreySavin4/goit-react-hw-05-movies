@@ -1,19 +1,36 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { SearchMovies } from 'servise/Servise';
+import { MoviesList } from 'components/MoviesList';
+import FormMovie from 'components/Form';
 
 const Movies = () => {
-  const [value, setValue] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filterMovies, setFilterMovies] = useState(null);
+  const queryMovie = searchParams.get('query') ?? '';
+
+  useEffect(() => {
+    SearchMovies(queryMovie)
+      .then(res => res.json())
+      .then(res => setFilterMovies(res.results))
+      .catch(error => new Error(error));
+  }, [queryMovie]);
 
   const onChange = event => {
-    setValue(event.target.value);
+    const movieValue = event.target.value.trim();
+    setSearchParams({ query: movieValue });
+    event.target.reset();
   };
 
   return (
-    <form>
-      <label>
-        <input name="filter" type="text" value={value} onChange={onChange} />
-      </label>
-      <button type="submit">Search</button>
-    </form>
+    <>
+      <FormMovie onChange={onChange} />
+      {filterMovies ? (
+        <MoviesList moviesList={filterMovies} />
+      ) : (
+        <div>Loading...</div>
+      )}
+    </>
   );
 };
 

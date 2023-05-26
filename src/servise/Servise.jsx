@@ -16,10 +16,10 @@ export const Trending = async () => {
 };
 
 export const SearchMovies = query => {
-  fetch(
-    `https://api.themoviedb.org/3/search/movie?query=${query}include_adult=false&language=en-US&page=1`,
+  return fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`,
     options
-  ).then(res => res.json);
+  );
 };
 
 export const MovieDetail = async id => {
@@ -30,11 +30,11 @@ export const MovieDetail = async id => {
 };
 
 export const MovieCredits = async id => {
-  const response = await fetch(
+  const res = await fetch(
     `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
     options
   );
-  return await response.json();
+  return await res.json();
 };
 
 export const MovieReviews = async id => {

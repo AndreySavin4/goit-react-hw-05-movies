@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SearchMovies } from 'servise/Servise';
 import { MoviesList } from 'components/MoviesList';
-import FormMovie from 'components/Form';
+import FormMovie from 'components/FormMovie';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,15 +16,13 @@ const Movies = () => {
       .catch(error => new Error(error));
   }, [queryMovie]);
 
-  const onChange = event => {
-    const movieValue = event.target.value.trim();
-    setSearchParams({ query: movieValue });
-    event.target.reset();
+  const onSubmit = input => {
+    setSearchParams({ query: input });
   };
 
   return (
     <>
-      <FormMovie onChange={onChange} />
+      <FormMovie onSubmit={onSubmit} />
       {filterMovies ? (
         <MoviesList moviesList={filterMovies} />
       ) : (
